@@ -38,7 +38,7 @@ export class UserService {
   }
   async getUserPhoto(name: string): Promise<any> {
     try {
-      const user = await this.userRepo.findOne({ name: name });
+      const user = await this.userRepo.findOne({ where: { name: name } });
       console.log(user, '这个user');
       const photos = await this.photoRepo.find({
         relations: ['user'],
@@ -57,7 +57,7 @@ export class UserService {
     try {
       const photo = new Photo();
       console.log(name, 'id是');
-      const user = await this.userRepo.findOne({ name: name });
+      const user = await this.userRepo.findOne({ where: { name: name } });
       photo.url = createPhotoDto.url;
       photo.user = user;
       await this.photoRepo.save(photo);

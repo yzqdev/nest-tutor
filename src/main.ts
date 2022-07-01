@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const port = 5400;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
@@ -15,7 +16,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
   console.log('http://localhost:' + port);
   console.log(`http://localhost:${port}/api-docs`);
-  console.log(process.env );
+  console.log(process.env.NODE_ENV );
   await app.listen(port);
 }
 bootstrap();

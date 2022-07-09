@@ -1,10 +1,17 @@
 import { NestFactory } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const port = 5400;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+   const app = await NestFactory.create<NestFastifyApplication>(
+     AppModule,
+     new FastifyAdapter(),
+   );
   app.enableCors();
   const options = new DocumentBuilder()
     .setTitle('我的博客')
@@ -17,6 +24,6 @@ async function bootstrap() {
   console.log('http://localhost:' + port);
   console.log(`http://localhost:${port}/api-docs`);
   console.log(process.env.NODE_ENV );
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();
